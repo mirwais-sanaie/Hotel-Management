@@ -1,5 +1,5 @@
 import { eachDayOfInterval } from "date-fns";
-import { supabase } from "@/app/_lib/supabase";
+import { supabase } from "./supabase";
 
 /////////////
 // GET
@@ -42,12 +42,23 @@ export const getCabins = async function () {
     .order("name");
 
   if (error) {
-    console.error(error);
-    throw new Error("Cabins could not be loaded");
+    console.log(error);
+    // throw new Error("Cabins could not be loaded");
   }
 
   return data;
 };
+
+// export async function getCabins() {
+//   const { data, error } = await supabase.from("cabins").select("*");
+
+//   // if (error) {
+//   //   // console.error(error);
+//   //   // throw new Error("Cabins could not be loaded");
+//   // }
+
+//   return data;
+// }
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
