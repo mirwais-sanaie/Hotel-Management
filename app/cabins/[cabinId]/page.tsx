@@ -1,27 +1,31 @@
 import { getCabin } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import type { Metadata } from "next";
 
+// Define the type as expected by the Next.js build type checker
+interface PageProps {
+  params: Promise<{ cabinId: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+// ✅ generateMetadata with `params` as Promise
 export async function generateMetadata({
   params,
 }: {
-  params: { cabinId: string };
-}) {
-  const { name } = await getCabin(params.cabinId);
-
+  params: Promise<{ cabinId: string }>;
+}): Promise<Metadata> {
+  const { cabinId } = await params;
+  const { name } = await getCabin(cabinId);
   return {
-    title: `${name}`,
+    title: `Cabin ${name}`,
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { cabinId: string };
-}) {
-  const { name, description, image, maxCapacity } = await getCabin(
-    params.cabinId
-  );
+// ✅ main page component with `params` as Promise
+export default async function CabinDetail({ params }: PageProps) {
+  const { cabinId } = await params;
+  const { name, description, image, maxCapacity } = await getCabin(cabinId);
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
