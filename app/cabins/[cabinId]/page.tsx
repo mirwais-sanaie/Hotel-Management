@@ -3,13 +3,11 @@ import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import type { Metadata } from "next";
 
-// Define the type as expected by the Next.js build type checker
 interface PageProps {
   params: Promise<{ cabinId: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-// ✅ generateMetadata with `params` as Promise
 export async function generateMetadata({
   params,
 }: {
@@ -22,7 +20,6 @@ export async function generateMetadata({
   };
 }
 
-// ✅ main page component with `params` as Promise
 export default async function CabinDetail({ params }: PageProps) {
   const { cabinId } = await params;
   const { name, description, image, maxCapacity } = await getCabin(cabinId);
