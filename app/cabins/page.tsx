@@ -5,16 +5,18 @@ import Filter from "../_components/Filter";
 
 export const revalidate = 10;
 
+interface PageProps {
+  searchParams: Promise<{ capacity?: string }>;
+}
+
 export const metadata = {
   title: "Cabins",
 };
 
-export default function Cabins({
-  searchParams,
-}: {
-  searchParams: { capacity: string };
-}) {
-  const filter = searchParams?.capacity ?? "all";
+export default async function Cabins({ searchParams }: PageProps) {
+  const { capacity } = await searchParams;
+  const filter = capacity ?? "all";
+
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
