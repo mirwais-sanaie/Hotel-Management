@@ -10,7 +10,7 @@ async function Reservation({ cabin }: { cabin: cabinType }) {
   ]);
   return (
     <div className="grid grid-cols-2 border-primary-800 min-h-[400px]">
-      <DateSelector settings={settings} bookedDate={bookedDate} cabin={cabin} />
+      <DateSelector settings={settings} cabin={cabin} />
       <ReservationForm cabin={cabin} />
     </div>
   );

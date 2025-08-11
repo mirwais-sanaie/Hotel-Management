@@ -1,42 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { DayPicker } from "react-day-picker";
-import { isWithinInterval } from "date-fns";
+import { DayPicker, DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { cabinType } from "../types/Types";
 
-function isAlreadyBooked(
-  range: { from: Date | null; to: Date | null },
-  datesArr: Date[]
-) {
-  return (
-    range.from &&
-    range.to &&
-    datesArr.some((date) =>
-      isWithinInterval(date, { start: range.from, end: range.to })
-    )
-  );
-}
+type BookingSettings = {
+  minBookingLength: number;
+  maxBookingLength: number;
+};
 
 function DateSelector({
   settings,
-  bookedDate,
   cabin,
 }: {
-  settings: any;
-  bookedDate: any;
+  settings: BookingSettings;
   cabin: cabinType;
 }) {
-  const [range, setRange] = useState<{ from: Date | null; to: Date | null }>({
-    from: null,
-    to: null,
-  });
+  const [range, setRange] = useState<DateRange | undefined>(undefined);
 
   const { minBookingLength, maxBookingLength } = settings;
 
   const numNights =
-    range.from && range.to
+    range?.from && range?.to
       ? Math.ceil(
           (range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24)
         )
@@ -47,7 +33,7 @@ function DateSelector({
   const cabinPrice = numNights * (regularPrice - discount);
 
   function resetRange() {
-    setRange({ from: null, to: null });
+    setRange(undefined);
   }
 
   return (
@@ -95,7 +81,7 @@ function DateSelector({
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={resetRange}
