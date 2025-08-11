@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import Logo from "./Logo";
+import { useState, ReactNode } from "react";
 
-function TextExpander({ children }: { children: string }) {
+function TextExpander({ children }: { children: ReactNode }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Convert to string when splitting
+  const text = typeof children === "string" ? children : String(children);
+
   const displayText = isExpanded
-    ? children
-    : children.split(" ").slice(0, 40).join(" ") + "...";
+    ? text
+    : text.split(" ").slice(0, 40).join(" ") + "...";
 
   return (
     <span>

@@ -1,10 +1,15 @@
 "use client";
 
-import { isWithinInterval } from "date-fns";
+import { useState } from "react";
 import { DayPicker } from "react-day-picker";
+import { isWithinInterval } from "date-fns";
 import "react-day-picker/dist/style.css";
+import { cabinType } from "../types/Types";
 
-function isAlreadyBooked(range, datesArr) {
+function isAlreadyBooked(
+  range: { from: Date | null; to: Date | null },
+  datesArr: Date[]
+) {
   return (
     range.from &&
     range.to &&
@@ -14,23 +19,44 @@ function isAlreadyBooked(range, datesArr) {
   );
 }
 
-function DateSelector() {
-  // CHANGE
-  const regularPrice = 23;
-  const discount = 23;
-  const numNights = 23;
-  const cabinPrice = 23;
-  const range = { from: null, to: null };
+function DateSelector({
+  settings,
+  bookedDate,
+  cabin,
+}: {
+  settings: any;
+  bookedDate: any;
+  cabin: cabinType;
+}) {
+  const [range, setRange] = useState<{ from: Date | null; to: Date | null }>({
+    from: null,
+    to: null,
+  });
 
-  // SETTINGS
-  const minBookingLength = 1;
-  const maxBookingLength = 23;
+  const { minBookingLength, maxBookingLength } = settings;
+
+  const numNights =
+    range.from && range.to
+      ? Math.ceil(
+          (range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24)
+        )
+      : 0;
+
+  const regularPrice = cabin.regularPrice;
+  const discount = cabin.discount || 0;
+  const cabinPrice = numNights * (regularPrice - discount);
+
+  function resetRange() {
+    setRange({ from: null, to: null });
+  }
 
   return (
     <div className="flex flex-col justify-between">
       <DayPicker
         className="pt-12 place-self-center"
         mode="range"
+        selected={range}
+        onSelect={setRange}
         min={minBookingLength + 1}
         max={maxBookingLength}
         fromMonth={new Date()}
@@ -53,8 +79,9 @@ function DateSelector() {
             ) : (
               <span className="text-2xl">${regularPrice}</span>
             )}
-            <span className="">/night</span>
+            <span>/night</span>
           </p>
+
           {numNights ? (
             <>
               <p className="bg-accent-600 px-3 py-2 text-2xl">
@@ -71,7 +98,7 @@ function DateSelector() {
         {range.from || range.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
-            onClick={() => resetRange()}
+            onClick={resetRange}
           >
             Clear
           </button>
