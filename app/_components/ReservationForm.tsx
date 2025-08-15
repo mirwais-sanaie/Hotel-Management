@@ -1,14 +1,17 @@
+import { Session } from "next-auth";
 import { cabinType } from "../types/Types";
 
 function ReservationForm({
   cabin,
-  user,
+  session,
 }: {
   cabin: cabinType;
-  user: { name: string; image: string };
+  session: Session;
 }) {
-  // CHANGE
   const { maxCapacity } = cabin;
+
+  const userImage = session.user?.image ?? "/default-avatar.png";
+  const userName = session.user?.name ?? "Guest";
 
   return (
     <div className="scale-[1.01]">
@@ -17,13 +20,12 @@ function ReservationForm({
 
         <div className="flex gap-4 items-center">
           <img
-            // Important to display google profile images
             referrerPolicy="no-referrer"
             className="h-8 rounded-full"
-            src={user.image}
-            alt={user.name}
+            src={userImage}
+            alt={userName}
           />
-          <p>{user.name}</p>
+          <p>{userName}</p>
         </div>
       </div>
 
@@ -61,7 +63,6 @@ function ReservationForm({
 
         <div className="flex justify-end items-center gap-6">
           <p className="text-primary-300 text-base">Start by selecting dates</p>
-
           <button className="bg-accent-500 px-8 py-4 text-primary-800 font-semibold hover:bg-accent-600 transition-all disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-300">
             Reserve now
           </button>
