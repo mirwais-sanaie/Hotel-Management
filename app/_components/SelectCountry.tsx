@@ -1,5 +1,7 @@
 import { getCountries } from "@/app/_lib/data-service";
-import type { CountryType } from "@/app/types/Types";
+import { CountryType } from "../types/Types";
+
+// Let's imagine your colleague already built this component 😃
 
 interface SelectCountryProps {
   defaultCountry: string;
@@ -7,8 +9,6 @@ interface SelectCountryProps {
   id: string;
   className?: string; // Made optional with ?
 }
-
-// Let's imagine your colleague already built this component 😃
 
 async function SelectCountry({
   defaultCountry,
