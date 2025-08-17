@@ -10,6 +10,7 @@ export type cabinType = {
   image: string;
   createdAt?: Date;
   updatedAt?: Date;
+  status: string;
 };
 
 export type BookingType = {
