@@ -6,7 +6,7 @@ import { deleteReservation } from "../_lib/actions";
 import { useTransition } from "react";
 
 interface DeleteReservationProps {
-  bookingId: string; // or number, depending on your data type
+  bookingId: string;
 }
 
 function DeleteReservation({ bookingId }: DeleteReservationProps) {
