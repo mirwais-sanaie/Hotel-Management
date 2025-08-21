@@ -26,10 +26,18 @@ export type BookingType = {
   cabins: {
     name: string;
     image: string;
-  };
+  }[];
 };
 
 export type CountryType = {
   name: string;
   flag: string;
+};
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  guestId?: string; // Add guestId property if it exists
+  // other properties
 };
