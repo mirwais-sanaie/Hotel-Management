@@ -16,7 +16,6 @@ type BookingSettings = {
   maxBookingLength: number;
 };
 
-// helper properly typed
 function isAlreadyBooked(
   range: DateRange | undefined,
   datesArr: Date[]
@@ -24,7 +23,7 @@ function isAlreadyBooked(
   return (
     !!range?.from &&
     !!range?.to &&
-    datesArr.some((date) =>
+    datesArr?.some((date) =>
       isWithinInterval(date, { start: range.from!, end: range.to! })
     )
   );
@@ -37,11 +36,10 @@ function DateSelector({
 }: {
   settings: BookingSettings;
   cabin: cabinType;
-  bookedDates: Date[]; // ✅ make bookedDates a required prop
+  bookedDates: Date[];
 }) {
   const { range, setRange, resetRange } = useReservation();
 
-  // if range overlaps booked dates → clear selection
   const displayRange: DateRange | undefined = isAlreadyBooked(
     range,
     bookedDates

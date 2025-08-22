@@ -5,18 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import type { BookingType } from "@/app/types/Types";
 
+interface ReservationCardProps {
+  booking: BookingType;
+  onDelete: (bookingId: string) => Promise<void>;
+}
+
 export const formatDistanceFromNow = (dateStr: string) =>
   formatDistance(parseISO(dateStr), new Date(), {
     addSuffix: true,
   }).replace("about ", "");
 
-function ReservationCard({
-  booking,
-  onDelete,
-}: {
-  booking: BookingType;
-  onDelete: () => void;
-}) {
+function ReservationCard({ booking, onDelete }: ReservationCardProps) {
   const {
     id,
     startDate,
@@ -25,8 +24,11 @@ function ReservationCard({
     totalPrice,
     numGuests,
     created_at,
-    cabins: { name, image },
+    cabins,
   } = booking;
+
+  const name = cabins?.name || "Unknown";
+  const image = cabins?.image || "/placeholder.jpg";
 
   return (
     <div className="flex border border-primary-800">
@@ -78,7 +80,6 @@ function ReservationCard({
       <div className="flex flex-col border-l border-primary-800 w-[100px]">
         {!isPast(startDate) ? (
           <>
-            {" "}
             <Link
               href={`/account/reservations/edit/${id}`}
               className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"

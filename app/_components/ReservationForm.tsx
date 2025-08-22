@@ -39,17 +39,20 @@ function ReservationForm({
   const createBookingWithData = createBooking.bind(null, bookingData);
 
   return (
-    <div className="scale-[1.01]">
-      <div className="bg-primary-800 text-primary-300 px-16 py-2 flex justify-between items-center">
-        <p>Logged in as</p>
+    <div>
+      <div className="scale-[1.01]">
+        <div className="bg-primary-800 text-primary-300 px-16 py-2 flex justify-between items-center">
+          <p>Logged in as</p>
 
-        <div className="flex gap-4 items-center">
-          <img
-            // Important to display google profile images
+          {/* Important to display google profile images */}
+          <Image
             referrerPolicy="no-referrer"
             className="h-8 rounded-full"
-            src={session?.user?.image}
-            alt={session?.user?.name}
+            src={session?.user?.image ?? "/default-profile.png"}
+            alt={session?.user?.name ?? "User profile"}
+            width={32}
+            height={32}
+            unoptimized
           />
           <p>{session?.user?.name}</p>
         </div>

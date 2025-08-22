@@ -9,13 +9,13 @@ import { redirect } from "next/navigation";
 // Sign in with Google
 export async function signInAction() {
   await signIn("google");
-  redirect("/account"); // handle redirect after sign-in
+  redirect("/account");
 }
 
 // Sign out
 export async function signOutAction() {
   await signOut();
-  redirect("/"); // redirect after sign-out
+  redirect("/");
 }
 
 // Update guest profile
@@ -105,7 +105,7 @@ export async function createBooking(bookingData, formData) {
     guestId: session.user.guestId,
     numGuests: Number(formData.get("numGuests")),
     observations: formData.get("observations").slice(0, 1000),
-    extrasPrice: 0,
+    extraPrice: 0,
     totalPrice: bookingData.cabinPrice,
     isPaid: false,
     hasBreakfast: false,

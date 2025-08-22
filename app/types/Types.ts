@@ -10,7 +10,7 @@ export type cabinType = {
   image: string;
   createdAt?: Date;
   updatedAt?: Date;
-  status: string;
+  status?: string;
 };
 
 export type BookingType = {
@@ -23,10 +23,11 @@ export type BookingType = {
   numGuests: number;
   status: string;
   created_at: string;
-  cabins: {
+  cabins?: {
+    // single cabin, optional
     name: string;
     image: string;
-  }[];
+  };
 };
 
 export type CountryType = {

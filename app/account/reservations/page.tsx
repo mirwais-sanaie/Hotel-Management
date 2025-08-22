@@ -3,14 +3,16 @@ import { auth } from "@/app/_lib/auth";
 import { getBookings } from "@/app/_lib/data-service";
 import Link from "next/link";
 
-export const metadata = {
-  title: "Reservations",
+// Extend the User type to include guestId
+type UserWithGuestId = {
+  guestId?: string;
+  [key: string]: unknown;
 };
 
 export default async function Page() {
-  // CHANGE
   const session = await auth();
-  const bookings = await getBookings(session?.user?.guestId);
+  const user = session?.user as UserWithGuestId | undefined;
+  const bookings = await getBookings(user?.guestId);
 
   return (
     <div>
