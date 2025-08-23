@@ -23,13 +23,11 @@ export type BookingType = {
   numGuests: number;
   status: string;
   created_at: string;
-  cabins?: {
-    // single cabin, optional
+  cabins: {
     name: string;
     image: string;
   };
 };
-
 export type CountryType = {
   name: string;
   flag: string;
@@ -39,6 +37,5 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  guestId?: string; // Add guestId property if it exists
-  // other properties
+  guestId?: string;
 };
